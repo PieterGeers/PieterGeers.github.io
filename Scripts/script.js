@@ -31,6 +31,7 @@ let tempPipe = null;
 window.onload = Initialize();
 
 document.onkeydown = HandleInput;
+document.onclick = HandleClickInput;
 
 function Initialize()
 {
@@ -200,6 +201,28 @@ function HandleInput(event)
             {
                 location.reload();
             }
+            break;
+        default:
+    }
+}
+
+function HandleClickInput(event)
+{
+    switch (gameState)
+    {
+        case "start":
+            if (event.button === 0)
+            {
+                gameState = "play";
+            }
+            break;
+        case "play":
+            if (event.button === 0)
+            {
+                player.HandleJump();
+            }
+            break;
+        case "end":
             break;
         default:
     }
