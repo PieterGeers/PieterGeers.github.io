@@ -8,6 +8,10 @@ canvas {
     border: 2px solid black;
 }
 
+body {
+    background-color: #F2F0E4;
+}
+
 .center {
     text-align: center;
 }

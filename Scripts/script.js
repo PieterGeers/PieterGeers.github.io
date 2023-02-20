@@ -1,5 +1,6 @@
 let canvas;
 let context;
+let resetText;
 
 let deltaTime; //in ms
 let frameCount = 0;
@@ -30,13 +31,16 @@ let tempPipe = null;
 
 window.onload = Initialize();
 
-document.onkeydown = HandleInput;
-document.onclick = HandleClickInput;
-
 function Initialize()
 {
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
+
+    canvas.onclick = HandleClickInput;
+
+    resetText = document.getElementById("reset");
+    resetText.onclick = Reload;
+    resetText.style.display = "none";
 
     ground.y = canvas.height - ground.height;
 
@@ -92,6 +96,7 @@ function Update()
             if (HandleCollision())
             {
                 gameState = "end";
+                resetText.style.display = "block";
             }
             break;
         case "end":
@@ -180,52 +185,25 @@ function HandleCollision()
     return false;
 }
 
-function HandleInput(event)
-{
-    switch (gameState)
-    {
-        case "start":
-            if (event.keyCode === 32) //32 = space
-            {
-                gameState = "play";
-            }
-            break;
-        case "play":
-            if (event.keyCode === 32)
-            {
-                player.HandleJump();
-            }
-            break;
-        case "end":
-            if (event.key === 'r')
-            {
-                location.reload();
-            }
-            break;
-        default:
-    }
-}
-
 function HandleClickInput(event)
 {
     switch (gameState)
     {
         case "start":
-            if (event.button === 0)
-            {
                 gameState = "play";
-            }
             break;
         case "play":
-            if (event.button === 0)
-            {
                 player.HandleJump();
-            }
             break;
         case "end":
             break;
         default:
     }
+}
+
+function Reload(event)
+{
+    location.reload();
 }
 
 function UpdateScore()
